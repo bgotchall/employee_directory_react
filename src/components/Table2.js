@@ -21,16 +21,16 @@ import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 
-function createData(name, phone, email, dob, protein) {
-  return { name, phone, email, dob, protein };
+function createData( name,image, phone, email, dob) {
+  return { name, image,phone, email, dob };
 }
 
 const rows = [
-  createData('Joe Smith', 5125436789, "joe@company.com", 21081990, 4.3),
-  createData('Sally Jones', 5125551234, "sally@company.com", 21081985, 4.9),
-  createData('Kris Jacobs', 5121668765, "kris@company.com", 21081975, 6.0),
-  createData('Lucas Morris', 5124326578, "lucas@company.com", 21081970, 4.0),
-  createData('Sandy Rudell', 5126789876, "sandy@company.com", 21081969, 3.9),
+  createData('Joe Smith','profile1.jpg', 5125436789, "joe@company.com", 21081990),
+  createData('Sally Jones','images2.png', 5125551234, "sally@company.com", 21081985),
+  createData('Kris Jacobs','images3.jpg', 5121668765, "kris@company.com", 21081975),
+  createData('Lucas Morris','images4.jpg', 5124326578, "lucas@company.com", 21081970),
+  createData('Sandy Rudell','images5.jpg', 5126789876, "sandy@company.com", 21081969)
  
 ];
 
@@ -61,11 +61,13 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
+
   { id: 'name', numeric: false, disablePadding: true, label: 'Name' },
+  { id: 'image', numeric: false, disablePadding: false, label: 'Image' },
   { id: 'phone', numeric: true, disablePadding: false, label: 'Phone' },
   { id: 'email', numeric: true, disablePadding: false, label: 'Email' },
   { id: 'dob', numeric: true, disablePadding: false, label: 'DOB' },
-  { id: 'protein', numeric: true, disablePadding: false, label: 'Protein (g)' },
+  
 ];
 
 function EnhancedTableHead(props) {
@@ -157,7 +159,7 @@ const EnhancedTableToolbar = props => {
         </Typography>
       ) : (
         <Typography className={classes.title} variant="h6" id="tableTitle">
-          Nutrition
+          Directory
         </Typography>
       )}
 
@@ -212,8 +214,8 @@ export default function EnhancedTable() {
   const [orderBy, setOrderBy] = React.useState('phone');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [dense, setDense] = React.useState(true);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -313,10 +315,11 @@ export default function EnhancedTable() {
                       <TableCell component="th" id={labelId} scope="row" padding="none">
                         {row.name}
                       </TableCell>
+                       <TableCell align="right"><img src= {'./assets/'+row.image} width="100" height="100"></img></TableCell>
                       <TableCell align="right">{row.phone}</TableCell>
                       <TableCell align="right">{row.email}</TableCell>
                       <TableCell align="right">{row.dob}</TableCell>
-                      <TableCell align="right">{row.protein}</TableCell>
+                     
                     </TableRow>
                   );
                 })}
