@@ -21,16 +21,16 @@ import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 
-function createData(image, name, phone, email, DOB) {
-  return { image, name, phone, email, DOB };
+function createData(name, phone, email, dob, protein) {
+  return { name, phone, email, dob, protein };
 }
 
 const rows = [
-  createData("assets/profile1",'Bob Smith', 5121234565, "bobsmith@gmail.com", "30 06 1990"),
-  createData("assets/profile2",'Joe Williams', 5126666666, "bobsmith@gmail.com", "30 06 1990"),
-  createData("assets/profile3",'Susy Jones', 512121212, "bobsmith@gmail.com", "30 06 1990"),
-  createData("assets/profile4",'Alexa Hammond', 5129994565, "bobsmith@gmail.com", "30 06 1990"),
-
+  createData('Joe Smith', 5125436789, "joe@company.com", 21081990, 4.3),
+  createData('Sally Jones', 5125551234, "sally@company.com", 21081985, 4.9),
+  createData('Kris Jacobs', 5121668765, "kris@company.com", 21081975, 6.0),
+  createData('Lucas Morris', 5124326578, "lucas@company.com", 21081970, 4.0),
+  createData('Sandy Rudell', 5126789876, "sandy@company.com", 21081969, 3.9),
  
 ];
 
@@ -61,11 +61,11 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: 'Icon', numeric: false, disablePadding: true, label: 'Employee' },
-  { id: 'Name', numeric: false, disablePadding: false, label: 'Name' },
-  { id: 'Phone', numeric: true, disablePadding: false, label: 'Phone' },
-  { id: 'Email', numeric: false, disablePadding: false, label: 'Email' },
-  { id: 'DOB', numeric: false, disablePadding: false, label: 'DOB' },
+  { id: 'name', numeric: false, disablePadding: true, label: 'Name' },
+  { id: 'phone', numeric: true, disablePadding: false, label: 'Phone' },
+  { id: 'email', numeric: true, disablePadding: false, label: 'Email' },
+  { id: 'dob', numeric: true, disablePadding: false, label: 'DOB' },
+  { id: 'protein', numeric: true, disablePadding: false, label: 'Protein (g)' },
 ];
 
 function EnhancedTableHead(props) {
@@ -82,7 +82,7 @@ function EnhancedTableHead(props) {
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
-            inputProps={{ 'aria-label': 'select all employees' }}
+            inputProps={{ 'aria-label': 'Select All' }}
           />
         </TableCell>
         {headCells.map(headCell => (
@@ -157,7 +157,7 @@ const EnhancedTableToolbar = props => {
         </Typography>
       ) : (
         <Typography className={classes.title} variant="h6" id="tableTitle">
-        
+          Nutrition
         </Typography>
       )}
 
@@ -209,7 +209,7 @@ const useStyles = makeStyles(theme => ({
 export default function EnhancedTable() {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('Name');
+  const [orderBy, setOrderBy] = React.useState('phone');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
@@ -313,19 +313,10 @@ export default function EnhancedTable() {
                       <TableCell component="th" id={labelId} scope="row" padding="none">
                         {row.name}
                       </TableCell>
-                      <TableCell align="right">{row.Phone}</TableCell>
-                      <TableCell align="right">{row.Email}</TableCell>
-                      <TableCell align="right">{row.Dob}</TableCell>
-                      {/* <TableCell align="right">{row.protein}</TableCell> */}
-
-                      {/* { id: 'Icon', numeric: false, disablePadding: true, label: 'Employee' },
-  { id: 'Name', numeric: false, disablePadding: false, label: 'Name' },
-  { id: 'Phone', numeric: true, disablePadding: false, label: 'Phone' },
-  { id: 'Email', numeric: false, disablePadding: false, label: 'Email' },
-  { id: 'DOB', numeric: false, disablePadding: false, label: 'DOB' }, */}
-
-
-
+                      <TableCell align="right">{row.phone}</TableCell>
+                      <TableCell align="right">{row.email}</TableCell>
+                      <TableCell align="right">{row.dob}</TableCell>
+                      <TableCell align="right">{row.protein}</TableCell>
                     </TableRow>
                   );
                 })}

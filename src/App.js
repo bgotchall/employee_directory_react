@@ -5,6 +5,8 @@ import './App.css';
 import Header from './components/Header.js';
 import Footer from './components/Footer.js';
 import Table from './components/Table.js';
+import TableSave from './components/TableSave.js';
+import Table2 from './components/Table2.js';
 
 
 function App() {
@@ -17,7 +19,7 @@ function App() {
         </Grid>
         
         <Grid item xs={12}>
-          <Table />
+          <Table2 />
         </Grid>
         <Grid item xs={12}>
           <Footer />
