@@ -21,18 +21,7 @@ import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 
-function createData( name,image, phone, email, dob) {
-  return { name, image,phone, email, dob };
-}
 
-const rows = [
-  createData('Joe Smith','profile1.jpg', 5125436789, "joe@company.com", 21081990),
-  createData('Sally Jones','images2.png', 5125551234, "sally@company.com", 21081985),
-  createData('Kris Jacobs','images3.jpg', 5121668765, "kris@company.com", 21081975),
-  createData('Lucas Morris','images4.jpg', 5124326578, "lucas@company.com", 21081970),
-  createData('Sandy Rudell','images5.jpg', 5126789876, "sandy@company.com", 21081969)
- 
-];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -67,7 +56,7 @@ const headCells = [
   { id: 'phone', numeric: true, disablePadding: false, label: 'Phone' },
   { id: 'email', numeric: true, disablePadding: false, label: 'Email' },
   { id: 'dob', numeric: true, disablePadding: false, label: 'DOB' },
-  
+
 ];
 
 function EnhancedTableHead(props) {
@@ -131,13 +120,13 @@ const useToolbarStyles = makeStyles(theme => ({
   highlight:
     theme.palette.type === 'light'
       ? {
-          color: theme.palette.secondary.main,
-          backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-        }
+        color: theme.palette.secondary.main,
+        backgroundColor: lighten(theme.palette.secondary.light, 0.85),
+      }
       : {
-          color: theme.palette.text.primary,
-          backgroundColor: theme.palette.secondary.dark,
-        },
+        color: theme.palette.text.primary,
+        backgroundColor: theme.palette.secondary.dark,
+      },
   title: {
     flex: '1 1 100%',
   },
@@ -158,10 +147,10 @@ const EnhancedTableToolbar = props => {
           {numSelected} selected
         </Typography>
       ) : (
-        <Typography className={classes.title} variant="h6" id="tableTitle">
-          Directory
+          <Typography className={classes.title} variant="h6" id="tableTitle">
+            Directory
         </Typography>
-      )}
+        )}
 
       {numSelected > 0 ? (
         <Tooltip title="Delete">
@@ -170,12 +159,12 @@ const EnhancedTableToolbar = props => {
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title="Filter list">
-          <IconButton aria-label="filter list">
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
-      )}
+          <Tooltip title="Filter list">
+            <IconButton aria-label="filter list">
+              <FilterListIcon />
+            </IconButton>
+          </Tooltip>
+        )}
     </Toolbar>
   );
 };
@@ -208,7 +197,12 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function EnhancedTable() {
+export default function EnhancedTable(props) {
+
+  // console.log(`hi.  I would like you to see props.tableData:  ${props.data[0]}`);
+  // let item;
+  // props.data.map(item=> console.log(item))
+  
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('phone');
@@ -225,7 +219,7 @@ export default function EnhancedTable() {
 
   const handleSelectAllClick = event => {
     if (event.target.checked) {
-      const newSelecteds = rows.map(n => n.name);
+      const newSelecteds = props.data.map(n => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -267,7 +261,8 @@ export default function EnhancedTable() {
 
   const isSelected = name => selected.indexOf(name) !== -1;
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, props.data.length - page * rowsPerPage); 
+  
 
   return (
     <div className={classes.root}>
@@ -287,10 +282,10 @@ export default function EnhancedTable() {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={props.data.length}
             />
             <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
+              {stableSort(props.data, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.name);
@@ -315,11 +310,11 @@ export default function EnhancedTable() {
                       <TableCell component="th" id={labelId} scope="row" padding="none">
                         {row.name}
                       </TableCell>
-                       <TableCell align="right"><img src= {'./assets/'+row.image} width="100px" height="100px"></img></TableCell>
+                      <TableCell align="right"><img alt={row.name} src={'./assets/' + row.image} width="100px" height="100px"></img></TableCell>
                       <TableCell align="right">{row.phone}</TableCell>
                       <TableCell align="right">{row.email}</TableCell>
                       <TableCell align="right">{row.dob}</TableCell>
-                     
+
                     </TableRow>
                   );
                 })}
@@ -334,7 +329,7 @@ export default function EnhancedTable() {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={rows.length}
+          count={props.data.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}
