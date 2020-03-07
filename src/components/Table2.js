@@ -315,7 +315,7 @@ export default function EnhancedTable() {
                       <TableCell component="th" id={labelId} scope="row" padding="none">
                         {row.name}
                       </TableCell>
-                       <TableCell align="right"><img src= {'./assets/'+row.image} width="100" height="100"></img></TableCell>
+                       <TableCell align="right"><img src= {'./assets/'+row.image} width="100px" height="100px"></img></TableCell>
                       <TableCell align="right">{row.phone}</TableCell>
                       <TableCell align="right">{row.email}</TableCell>
                       <TableCell align="right">{row.dob}</TableCell>
